@@ -14,11 +14,13 @@ class TableView {
 	initDomReference(){
 		this.headerRowEl = document.querySelector('THEAD TR');
 		this.sheetBodyEl = document.querySelector('TBODY');
+		this.sumRowEl = document.querySelector('TFOOT TR');
 	}
 
 	renderTable(){
 		this.renderTableHeader();
 		this.renderTableBody();
+		this.renderTableFoot();
 	}
 
 	renderTableHeader(){
@@ -54,6 +56,16 @@ class TableView {
 		}
 		removeChildren(this.sheetBodyEl);
 		this.sheetBodyEl.appendChild(fragment);
+	}
+
+	renderTableFoot(){
+		removeChildren(this.sumRowEl);
+		getLetterRange('A', this.model.numCols)
+			.map(function(label){
+				let id = label;
+				return createTD(null, id);
+			})
+			.forEach(td => this.sumRowEl.appendChild(td));
 	}
 }
 

@@ -8,3 +8,7 @@ th, td, tr {
 	padding: 3px;
 	height: 25px;
 }
+
+tfoot {
+	background-color: limegreen;
+}
