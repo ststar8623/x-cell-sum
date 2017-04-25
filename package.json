@@ -1,11 +1,14 @@
 {
   "name": "x-cell-sum",
   "version": "1.0.0",
-  "description": "world's smallest spreadsheet",
+  "description": "universe's smallest spreadsheet",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "stevenleung <ststar8623@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
