@@ -148,14 +148,13 @@ class TableView {
 		this.sheetBodyEl.appendChild(fragment);
 	}
 
+	// generate TD for sum row and append to tfoot
 	renderTableFoot(){
 		removeChildren(this.sumRowEl);
-		getLetterRange('A', this.model.numCols)
-			.map(function(label){
-				let id = label;
-				return createTD(null, id);
-			})
-			.forEach(td => this.sumRowEl.appendChild(td));
+		for(let col = 0; col < this.model.numCols; col++){
+			const td = createTD();
+			this.sumRowEl.appendChild(td);
+		}
 	}
 
 	attachEventHandlers(){
@@ -164,16 +163,22 @@ class TableView {
 	}
 
 	handleSumRowChange(location){
+		// grab all value from each column by their cell indexes
 		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el);
 
 		let total;
-
-		if(arr.length > 0){
+		// generate sum
+		// if arr has no value, set it to '' incase undefined is shown
+		if(arr.length === 0){
+			total = '';
+		} else {
 			total = arr.reduce((a,b) => parseInt(a) + parseInt(b));
 		}
 
+		// grab sum cell by the index
 		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === location.col);
 
+		// set sum equal total value
 		sumCell[0].innerText = total;
 	}
 
