@@ -11,6 +11,21 @@ describe('table-view', () => {
 		document.documentElement.innerHTML = html;
 	});
 
+	describe('table body', () => {
+		it('has the right size', () => {
+			// set up initial state
+			const numCols = 6;
+			const numRows = 10;
+			const model = new TableModel(numCols, numRows);
+			const view = new TableView(model);
+			view.init();
+
+			//inspect the initial state
+			let ths = document.querySelectorAll('THEAD TH');
+			expect(ths.length).toBe(numCols);
+		});
+	})
+
 	describe('table header', () => {
 		it('has valid column header labels', () => {
 			// set up initial state
