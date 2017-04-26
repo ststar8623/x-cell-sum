@@ -5,13 +5,10 @@ const removeChildren = function(parentEl){
 };
 
 const createEl = function(tagName){
-	return function(text, ID){
+	return function(text){
 		const el = document.createElement(tagName);
 		if(text){
 			el.textContent = text;
-		}
-		if(ID){
-			el.id = ID;
 		}
 		return el;
 	};

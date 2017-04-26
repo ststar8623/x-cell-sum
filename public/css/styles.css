@@ -9,6 +9,10 @@ th, td, tr {
 	height: 25px;
 }
 
+td {
+	text-align: right;
+}
+
 tfoot {
 	background-color: limegreen;
 }

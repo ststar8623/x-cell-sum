@@ -31,7 +31,7 @@ describe('table-view', () => {
 			trs = document.querySelectorAll('TBODY TR');
 			expect(trs[0].cells[0].textContent).toBe('65');
 		});
-		
+
 		it('updates FROM the value of the current cell', () => {
 			// set up the initial state
 			const model = new TableModel(3, 3);

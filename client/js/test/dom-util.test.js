@@ -29,14 +29,6 @@ describe('dom-util', () => {
 				expect(el.tagName).toBe('TD');
 			});
 		});
-
-		describe('createTH with id', () => {
-			it('produce valid TH element with id included', () =>{
-				const el = createTH(null, 1);
-				expect(el.id).toBe('1');
-				expect(el.textContent).toEqual('');
-			});
-		});
 	});
 
 	describe('removeChildren()', () => {

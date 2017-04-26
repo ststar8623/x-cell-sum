@@ -44,10 +44,7 @@ class TableView {
 	renderTableHeader(){
 		removeChildren(this.headerRowEl);
 		getLetterRange('A', this.model.numCols)
-			.map(function(label){
-				let id = label + 0;
-				return createTH(label, id);
-			})
+			.map(colLabel => createTH(colLabel))
 			.forEach(th => this.headerRowEl.appendChild(th));
 	}
 
@@ -59,19 +56,11 @@ class TableView {
 	renderTableBody(){
 		const fragment = document.createDocumentFragment();
 		for(let row = 0; row < this.model.numRows; row++){
-			const tr = createTR(null, row + 1);
+			const tr = createTR();
 			for(let col = 0; col < this.model.numCols; col++){
 				const position = {col: col, row: row};
 				const value = this.model.getValue(position);
-
-				// convert index number to letter number
-				let num = col + 65;
-				// turn letter number into letter
-				let letter = String.fromCharCode(num);
-				// attach letter + row number to ID
-				let id = letter + (row + 1);
-				// generate TD element with ID
-				const td = createTD(value, id);
+				const td = createTD(value);
 
 				if(this.isCurrentCell(col, row)){
 					td.className = "current-cell";
@@ -100,6 +89,20 @@ class TableView {
 		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
 	}
 
+	handleSumRowChange(location){
+		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el);
+
+		let total;
+
+		if(arr.length > 0){
+			total = arr.reduce((a,b) => parseInt(a) + parseInt(b));
+		}
+
+		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === location.col);
+
+		sumCell[0].innerText = total;
+	}
+
 	handleFormulaBarChange(evt){
 		const value = this.formulaBarEl.value;
 		this.model.setValue(this.currentCellLocation, value);
@@ -113,6 +116,7 @@ class TableView {
 		this.currentCellLocation = { col: col, row: row };
 		this.renderTableBody();
 		this.renderFormulaBar();
+		this.handleSumRowChange(this.currentCellLocation);
 	}
 }
 

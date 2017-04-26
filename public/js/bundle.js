@@ -30,13 +30,10 @@ const removeChildren = function(parentEl){
 };
 
 const createEl = function(tagName){
-	return function(text, ID){
+	return function(text){
 		const el = document.createElement(tagName);
 		if(text){
 			el.textContent = text;
-		}
-		if(ID){
-			el.id = ID;
 		}
 		return el;
 	};
@@ -85,13 +82,31 @@ class TableView {
 
 	init(){
 		this.initDomReference();
+		this.initCurrentCell();
 		this.renderTable();
+		this.attachEventHandlers();
 	}
 
 	initDomReference(){
 		this.headerRowEl = document.querySelector('THEAD TR');
 		this.sheetBodyEl = document.querySelector('TBODY');
 		this.sumRowEl = document.querySelector('TFOOT TR');
+		this.formulaBarEl = document.querySelector('#formula-bar');
+	}
+
+	initCurrentCell(){
+		this.currentCellLocation = {col: 0, row: 0};
+		this.renderFormulaBar();
+	}
+
+	normalizeValueForRendering(value){
+		return value || '';
+	}
+
+	renderFormulaBar(){
+		const currentCellValue = this.model.getValue(this.currentCellLocation);
+		this.formulaBarEl.value = this.normalizeValueForRendering(currentCellValue);
+		this.formulaBarEl.focus();
 	}
 
 	renderTable(){
@@ -103,29 +118,27 @@ class TableView {
 	renderTableHeader(){
 		removeChildren(this.headerRowEl);
 		getLetterRange('A', this.model.numCols)
-			.map(function(label){
-				let id = label + 0;
-				return createTH(label, id);
-			})
+			.map(colLabel => createTH(colLabel))
 			.forEach(th => this.headerRowEl.appendChild(th));
+	}
+
+	isCurrentCell(col, row){
+		return this.currentCellLocation.col === col &&
+				this.currentCellLocation.row === row;
 	}
 
 	renderTableBody(){
 		const fragment = document.createDocumentFragment();
 		for(let row = 0; row < this.model.numRows; row++){
-			const tr = createTR(null, row + 1);
+			const tr = createTR();
 			for(let col = 0; col < this.model.numCols; col++){
 				const position = {col: col, row: row};
 				const value = this.model.getValue(position);
+				const td = createTD(value);
 
-				// convert index number to letter number
-				let num = col + 65;
-				// turn letter number into letter
-				let letter = String.fromCharCode(num);
-				// attach letter + row number to ID
-				let id = letter + (row + 1);
-				// generate TD element with ID
-				const td = createTD(value, id);
+				if(this.isCurrentCell(col, row)){
+					td.className = "current-cell";
+				}
 				// append TD element to TR element
 				tr.appendChild(td);
 			}
@@ -143,6 +156,41 @@ class TableView {
 				return createTD(null, id);
 			})
 			.forEach(td => this.sumRowEl.appendChild(td));
+	}
+
+	attachEventHandlers(){
+		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
+		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
+	}
+
+	handleSumRowChange(location){
+		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el);
+
+		let total;
+
+		if(arr.length > 0){
+			total = arr.reduce((a,b) => parseInt(a) + parseInt(b));
+		}
+
+		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === location.col);
+
+		sumCell[0].innerText = total;
+	}
+
+	handleFormulaBarChange(evt){
+		const value = this.formulaBarEl.value;
+		this.model.setValue(this.currentCellLocation, value);
+		this.renderTableBody();
+	}
+
+	handleSheetClick(evt){
+		const col = evt.target.cellIndex;
+		const row = evt.target.parentElement.rowIndex - 1;
+
+		this.currentCellLocation = { col: col, row: row };
+		this.renderTableBody();
+		this.renderFormulaBar();
+		this.handleSumRowChange(this.currentCellLocation);
 	}
 }
 
