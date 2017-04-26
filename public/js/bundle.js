@@ -164,7 +164,7 @@ class TableView {
 
 	handleSumRowChange(location){
 		// grab all value from each column by their cell indexes
-		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el);
+		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el).filter(el => el == Number(el));
 
 		let total;
 		// generate sum
@@ -193,6 +193,7 @@ class TableView {
 		const row = evt.target.parentElement.rowIndex - 1;
 
 		this.currentCellLocation = { col: col, row: row };
+		console.log(this.currentCellLocation);
 		this.renderTableBody();
 		this.renderFormulaBar();
 		this.handleSumRowChange(this.currentCellLocation);

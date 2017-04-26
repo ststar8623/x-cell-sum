@@ -52,6 +52,44 @@ describe('table-view', () => {
 		});
 	});
 
+	describe('table foot', () => {
+		it('has the right size', () => {
+			// set up initial state
+			const numCols = 6;
+			const numRows = 10
+			const model = new TableModel(numCols, numRows);
+			const view = new TableView(model);
+			view.init();
+
+			// inspect the initial state
+			let tfs = document.querySelectorAll('TFOOT TD');
+			expect(tfs.length).toBe(numCols);
+		});
+
+		// it('display sum', () => {
+		// 	// set up initial state
+		// 	const model = new TableModel(5, 10);
+		// 	const view = new TableView(model);
+		// 	model.setValue({col: 0, row: 0}, '123');
+		// 	model.setValue({col: 0, row: 1}, '456');
+		// 	view.init();
+
+		// 	// inspect the initial state
+		// 	let trs = document.querySelectorAll('TBODY TR');
+		// 	let td = trs[0].cells[3];
+
+		// 	// simulate user action
+		// 	td.click();
+
+		// 	// inspect the resulting state
+		// 	let tfs = document.querySelectorAll('TFOOT TR');
+		// 	t = tfs[0].cells[0];
+		// 	console.log(t);
+		// 	expect(t.textContent).toBe('579');
+
+		// });
+	});
+
 	describe('table body', () => {
 		it('highligths the current cell when clicked', () =>{
 			// set up the initial state
