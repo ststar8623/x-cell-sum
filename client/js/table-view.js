@@ -31,7 +31,7 @@ class TableView {
 
 	renderFormulaBar(){
 		const currentCellValue = this.model.getValue(this.currentCellLocation);
-		this.renderFormulaBar.value = this.normalizeValueForRendering(currentCellValue);
+		this.formulaBarEl.value = this.normalizeValueForRendering(currentCellValue);
 		this.formulaBarEl.focus();
 	}
 
@@ -97,31 +97,23 @@ class TableView {
 
 	attachEventHandlers(){
 		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
+		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
 	}
 
-	isColumnHeaderRow(row){
-		return row < 1;
+	handleFormulaBarChange(evt){
+		const value = this.formulaBarEl.value;
+		this.model.setValue(this.currentCellLocation, value);
+		this.renderTableBody();
 	}
 
 	handleSheetClick(evt){
 		const col = evt.target.cellIndex;
 		const row = evt.target.parentElement.rowIndex - 1;
 
-		if(!this.isColumnHeaderRow(row)){
-			this.currentCellLocation = { col: col, row: row };
-			this.renderTableBody();
-		}
+		this.currentCellLocation = { col: col, row: row };
+		this.renderTableBody();
 		this.renderFormulaBar();
 	}
 }
 
 module.exports = TableView;
-
-
-
-
-
-
-
-
-
