@@ -12,3 +12,7 @@ th, td, tr {
 tfoot {
 	background-color: limegreen;
 }
+
+.current-cell {
+	background-color: pink;
+}
