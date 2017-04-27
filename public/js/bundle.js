@@ -178,7 +178,7 @@ class TableView {
 		// grab sum cell by the index
 		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === location.col);
 
-		// set sum equal total value
+		// set sum cell as total value
 		sumCell[0].innerText = total;
 	}
 

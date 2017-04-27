@@ -6,11 +6,17 @@ th, td, tr {
 	border: 1px solid black;
 	min-width: 100px;
 	padding: 3px;
-	height: 25px;
+	height: 26px;
+	text-align: right;
 }
 
-td {
+th {
+	font-size: 20px;
+}
+
+tbody td {
 	text-align: right;
+	background-color: #dde;
 }
 
 tfoot {
