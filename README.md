@@ -11,3 +11,5 @@ This is a microscopic "spreadsheet" app that will knock your socks off, if you h
 ![img](http://i.imgur.com/bOiihOCl.jpg)
 
 ![img](http://i.imgur.com/9DBgLu3l.jpg)
+
+![img](client/graph.jpg)
