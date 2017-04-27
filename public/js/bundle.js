@@ -93,6 +93,7 @@ class TableView {
 		this.sumRowEl = document.querySelector('TFOOT TR');
 		this.formulaBarEl = document.querySelector('#formula-bar');
 		this.addRowButton = document.getElementById('add-row');
+		this.addColumnButton = document.getElementById('add-column');
 	}
 
 	initCurrentCell(){
@@ -104,6 +105,7 @@ class TableView {
 		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
 		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
 		this.addRowButton.addEventListener('submit', this.addRow.bind(this));
+		this.addColumnButton.addEventListener('submit', this.addColumn.bind(this));
 	}
 
 	normalizeValueForRendering(value){
@@ -138,6 +140,14 @@ class TableView {
 		event.preventDefault();
 		this.model.numRows++;
 		this.renderTableBody();
+	}
+
+	addColumn(event){
+		event.preventDefault();
+		this.model.numCols++;
+		this.renderTableBody();
+		this.renderTableHeader();
+		this.renderTableFoot();
 	}
 
 	renderTableBody(){
