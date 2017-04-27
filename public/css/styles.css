@@ -26,3 +26,20 @@ tfoot {
 .current-cell {
 	background-color: pink;
 }
+
+form {
+	display: inline-block;
+	margin: 10px;
+}
+
+button {
+	color: #900;
+	background: #FF0;
+	font-weight: bold;
+	border: 1px solid #900;
+}
+
+button:hover {
+	color: #FFF;
+	background: #900;
+}

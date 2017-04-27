@@ -11,6 +11,46 @@ describe('table-view', () => {
 		document.documentElement.innerHTML = html;
 	});
 
+	describe('add button', () => {
+		it('add extra row', () => {
+			// set up the initial state
+			const numCols = 6;
+			const numRows = 10;
+			const model = new TableModel(numCols, numRows);
+			const view = new TableView(model);
+			view.init();
+
+			// inspect the initial state
+			let addRow = document.getElementById('add-row');
+
+			// simulate user action
+			addRow.click();
+			let trs = document.querySelectorAll('TBODY TR');
+
+			// inspect the resulting state
+			expect(trs.length).toBe(numRows + 1);
+		});
+
+		it('add extra column', () => {
+			// set up the initial state
+			const numCols = 6;
+			const numRows = 10;
+			const model = new TableModel(numCols, numRows);
+			const view = new TableView(model);
+			view.init();
+
+			// inspect the initial state
+			let addColumn = document.getElementById('add-column');
+
+			// simulate user action
+			addColumn.click();
+			let tds = document.querySelectorAll('TBODY TR TD');
+
+			// inspect the resulting state
+			expect(tds.length / numRows).toBe(numCols + 1);
+		});
+	});
+
 	describe('formula-bar', () => {
 		it('makes changes TO the value of the current cell', () => {
 			// set up the initial state
@@ -65,29 +105,6 @@ describe('table-view', () => {
 			let tfs = document.querySelectorAll('TFOOT TD');
 			expect(tfs.length).toBe(numCols);
 		});
-
-		// it('display sum', () => {
-		// 	// set up initial state
-		// 	const model = new TableModel(5, 10);
-		// 	const view = new TableView(model);
-		// 	model.setValue({col: 0, row: 0}, '123');
-		// 	model.setValue({col: 0, row: 1}, '456');
-		// 	view.init();
-
-		// 	// inspect the initial state
-		// 	let trs = document.querySelectorAll('TBODY TR');
-		// 	let td = trs[0].cells[3];
-
-		// 	// simulate user action
-		// 	td.click();
-
-		// 	// inspect the resulting state
-		// 	let tfs = document.querySelectorAll('TFOOT TR');
-		// 	t = tfs[0].cells[0];
-		// 	console.log(t);
-		// 	expect(t.textContent).toBe('579');
-
-		// });
 	});
 
 	describe('table body', () => {

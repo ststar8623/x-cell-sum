@@ -27,13 +27,6 @@ class TableView {
 		this.renderFormulaBar();
 	}
 
-	attachEventHandlers(){
-		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
-		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
-		this.addRowButton.addEventListener('submit', this.addRow.bind(this));
-		this.addColumnButton.addEventListener('submit', this.addColumn.bind(this));
-	}
-
 	normalizeValueForRendering(value){
 		return value || '';
 	}
@@ -74,6 +67,13 @@ class TableView {
 		this.renderTableBody();
 		this.renderTableHeader();
 		this.renderTableFoot();
+	}
+
+	attachEventHandlers(){
+		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
+		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
+		this.addRowButton.addEventListener('click', this.addRow.bind(this));
+		this.addColumnButton.addEventListener('click', this.addColumn.bind(this));
 	}
 
 	renderTableBody(){
