@@ -112,6 +112,7 @@ class TableView {
 		const value = this.formulaBarEl.value;
 		this.model.setValue(this.currentCellLocation, value);
 		this.renderTableBody();
+		this.handleSumRowChange(this.currentCellLocation);
 	}
 
 	handleSheetClick(evt){
@@ -119,10 +120,8 @@ class TableView {
 		const row = evt.target.parentElement.rowIndex - 1;
 
 		this.currentCellLocation = { col: col, row: row };
-		console.log(this.currentCellLocation);
 		this.renderTableBody();
 		this.renderFormulaBar();
-		this.handleSumRowChange(this.currentCellLocation);
 	}
 }
 
