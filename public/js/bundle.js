@@ -131,16 +131,23 @@ class TableView {
 
 	addRow(event){
 		event.preventDefault();
+		// add a row when button is clicked
 		this.model.numRows++;
+		// re-render tableBody
 		this.renderTableBody();
 	}
 
 	addColumn(event){
 		event.preventDefault();
+		// add a column when button is clicked
 		this.model.numCols++;
+		// re-render tableBody and tableHeader
 		this.renderTableBody();
 		this.renderTableHeader();
-		this.renderTableFoot();
+
+		// create table data cell and append to sum row
+		const tds = createTD();
+		this.sumRowEl.append(tds);
 	}
 
 	attachEventHandlers(){
@@ -212,7 +219,6 @@ class TableView {
 		const row = evt.target.parentElement.rowIndex - 1;
 
 		this.currentCellLocation = { col: col, row: row };
-		console.log(this.currentCellLocation);
 		this.renderTableBody();
 		this.renderFormulaBar();
 	}
