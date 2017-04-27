@@ -18,11 +18,18 @@ class TableView {
 		this.sheetBodyEl = document.querySelector('TBODY');
 		this.sumRowEl = document.querySelector('TFOOT TR');
 		this.formulaBarEl = document.querySelector('#formula-bar');
+		this.addRowButton = document.getElementById('add-row');
 	}
 
 	initCurrentCell(){
 		this.currentCellLocation = {col: 0, row: 0};
 		this.renderFormulaBar();
+	}
+
+	attachEventHandlers(){
+		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
+		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
+		this.addRowButton.addEventListener('submit', this.addRow.bind(this));
 	}
 
 	normalizeValueForRendering(value){
@@ -53,6 +60,12 @@ class TableView {
 				this.currentCellLocation.row === row;
 	}
 
+	addRow(event){
+		event.preventDefault();
+		this.model.numRows++;
+		this.renderTableBody();
+	}
+
 	renderTableBody(){
 		const fragment = document.createDocumentFragment();
 		for(let row = 0; row < this.model.numRows; row++){
@@ -81,11 +94,6 @@ class TableView {
 			const td = createTD();
 			this.sumRowEl.appendChild(td);
 		}
-	}
-
-	attachEventHandlers(){
-		this.sheetBodyEl.addEventListener('click', this.handleSheetClick.bind(this));
-		this.formulaBarEl.addEventListener('keyup', this.handleFormulaBarChange.bind(this));
 	}
 
 	handleSumRowChange(location){
@@ -120,6 +128,7 @@ class TableView {
 		const row = evt.target.parentElement.rowIndex - 1;
 
 		this.currentCellLocation = { col: col, row: row };
+		console.log(this.currentCellLocation);
 		this.renderTableBody();
 		this.renderFormulaBar();
 	}
