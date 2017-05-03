@@ -12,7 +12,7 @@ describe('table-view', () => {
 	});
 
 	describe('add button', () => {
-		it('add extra row', () => {
+		it('it adds one extra row when the Add Row button is clicked', () => {
 			// set up the initial state
 			const numCols = 6;
 			const numRows = 10;
@@ -31,7 +31,7 @@ describe('table-view', () => {
 			expect(trs.length).toBe(numRows + 1);
 		});
 
-		it('add extra column', () => {
+		it('it adds one extra column when the Add Row button is clicked', () => {
 			// set up the initial state
 			const numCols = 6;
 			const numRows = 10;

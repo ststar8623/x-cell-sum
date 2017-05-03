@@ -44,3 +44,7 @@ button:hover {
 	color: #FFF;
 	background: #900;
 }
+
+.highlight {
+	background-color: white;
+}

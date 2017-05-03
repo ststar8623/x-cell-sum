@@ -113,9 +113,9 @@ class TableView {
 		}
 	}
 
-	handleSumRowChange(location){
+	handleSumRowChange(){
 		// grab all value from each column by their cell indexes
-		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === location.col).map(el => el.innerText).filter(el => el).filter(el => el == Number(el));
+		const arr = Array.from(document.querySelectorAll('TBODY TD')).filter(el => el.cellIndex === this.currentCellLocation.col).map(el => el.innerText).filter(el => el).filter(el => el == Number(el));
 
 		let total;
 		// generate sum
@@ -127,7 +127,7 @@ class TableView {
 		}
 
 		// grab sum cell by the index
-		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === location.col);
+		const sumCell = Array.from(document.querySelectorAll('TFOOT TR TD')).filter(el => el.cellIndex === this.currentCellLocation.col);
 
 		// set sum cell as total value
 		sumCell[0].innerText = total;
@@ -137,7 +137,7 @@ class TableView {
 		const value = this.formulaBarEl.value;
 		this.model.setValue(this.currentCellLocation, value);
 		this.renderTableBody();
-		this.handleSumRowChange(this.currentCellLocation);
+		this.handleSumRowChange();
 	}
 
 	handleSheetClick(evt){
